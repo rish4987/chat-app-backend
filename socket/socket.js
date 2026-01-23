@@ -31,25 +31,18 @@ const socketHandler = (ioInstance) => {
         socket.join(userId);
 
         // Notify friends/everyone? 
-        // In production, broadcasting to everyone is bad. 
-        // Better: Only emit to users who have active chats with this user. 
-        // For MVP/MERN scale: throttle this or keep it. I'll keep it but warn.
+        // In production: Only emit to users who have active chats with this user.
         io.emit("online users", Array.from(onlineUsers.keys()));
         
         socket.emit("connected");
       } catch (error) {
-        console.error("Setup error:", error);
+        // console.error("Setup error:", error);
       }
     });
 
     /* JOIN CHAT */
     socket.on("join chat", (chatId) => {
-      // NOTE: We trust the client to know which chat to join for realtime updates.
-      // Authentication is handled by the API. Socket rooms are just channels.
-      // If stricter security is needed, verify chat membership here again (costly).
-      
       socket.join(chatId);
-      // console.log(`User joined chat: ${chatId}`);
     });
 
     /* LEAVE CHAT */

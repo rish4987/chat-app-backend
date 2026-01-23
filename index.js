@@ -25,7 +25,9 @@ const ENV = process.env.NODE_ENV || "development";
 
 // Security & Middleware
 app.use(helmet());
-app.use(morgan("dev")); // Log requests
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
 
 // Rate Limiting (Basic protection)
 const limiter = rateLimit({
@@ -99,7 +101,7 @@ const startServer = async () => {
   try {
     await connectDB();
     server.listen(PORT, () => {
-      console.log(`🚀 Server running in ${ENV} mode at port ${PORT}`);
+    // console.log(`🚀 Server running in ${ENV} mode at port ${PORT}`);
     });
   } catch (error) {
     console.error("❌ Failed to start server:", error.message);

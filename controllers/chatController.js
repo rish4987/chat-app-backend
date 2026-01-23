@@ -87,7 +87,7 @@ export const fetchUserChats = asyncHandler(async (req, res) => {
         select: "name profileImg email",
       },
     })
-    .sort({ updatedAt: -1 }); // Most recent first
+    .sort({ updatedAt: -1 }); 
 
   res.status(200).json(chats);
 });
